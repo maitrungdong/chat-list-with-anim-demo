@@ -1,8 +1,14 @@
 body {
-  background-color: rgb(249, 243, 235);
   width: 100vw;
   height: 100vh;
   margin: 0;
+}
+
+* {
+  font-family: SegoeuiPc, Segoe UI, San Francisco, Helvetica Neue, Helvetica, Lucida Grande, Roboto, Ubuntu, Tahoma, Microsoft Sans Serif, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
@@ -14,11 +20,15 @@ body {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 12px;
+  background-color: #212121;
 }
 
 .conversation {
-  background-color: gray;
+  background-color: #eef0f1;
+
+  height: 100%;
   width: 100%;
-  height: calc(100% - 80px);
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
 }

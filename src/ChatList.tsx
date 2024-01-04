@@ -2,9 +2,10 @@ import React from 'react';
 
 import ChatListItem from './ChatListItem';
 import { usePreviousValue } from './hooks/use-previous-value';
+import { MessageType } from './MessageRepository';
 
 type ChatListProps = {
-    messageList: any[];
+    messageList: MessageType[];
 };
 
 function ChatList(props: ChatListProps) {
@@ -21,11 +22,12 @@ function ChatList(props: ChatListProps) {
                         messageList[messageList.length - 2].msgId ===
                             prevMessageList[prevMessageList.length - 1].msgId
                 );
+                const isJustAdded = isLastInList && isNewMessage;
                 return (
                     <ChatListItem
                         key={message.msgId}
                         message={message}
-                        isJustAdded={isLastInList && isNewMessage}
+                        isJustAdded={isJustAdded}
                     />
                 );
             })}

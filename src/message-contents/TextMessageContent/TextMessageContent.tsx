@@ -1,7 +1,8 @@
 import React from 'react';
+import { TextMessageType } from '../../MessageRepository';
 
 type TextMessageContentProps = {
-    message: any;
+    message: TextMessageType;
 };
 
 function TextMessageContent(props: TextMessageContentProps) {
