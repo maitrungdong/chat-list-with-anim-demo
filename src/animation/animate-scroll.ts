@@ -14,20 +14,10 @@ function longTransition(t: number) {
 }
 
 let isAnimating: boolean = false;
-let currentArgs: Parameters<typeof createMutateFunction> | undefined;
 
-export function animateScroll(...args: Params | [...Params, boolean]) {
-    currentArgs = args.slice(0, 5) as Params;
-
-    const mutate = createMutateFunction(...currentArgs);
-
-    const shouldReturnMutationFn = args[5];
-    if (shouldReturnMutationFn) {
-        return mutate;
-    }
-
+export function animateScroll(...args: Params): void {
+    const mutate = createMutateFunction(...args);
     window.requestAnimationFrame(mutate);
-    return undefined;
 }
 
 function createMutateFunction(
@@ -42,6 +32,7 @@ function createMutateFunction(
         offsetHeight: containerHeight,
         scrollHeight,
     } = container;
+
     const { offsetTop: elementTop, offsetHeight: elementHeight } = element;
 
     const targetContainerHeight = containerHeight;
@@ -52,45 +43,37 @@ function createMutateFunction(
             break;
         }
         case 'end': {
-            scrollTo =
-                elementTop + elementHeight + margin - targetContainerHeight;
+            scrollTo = currentScrollTop + elementHeight + margin;
         }
     }
 
-    const scrollFrom = calculateScrollFrom(container, scrollTo, maxDistance);
+    const scrollFrom = currentScrollTop;
 
     let path = scrollTo - scrollFrom;
-    if (path < 0) {
-        const remainingPath = -scrollFrom;
-        path = Math.max(path, remainingPath);
-    } else if (path > 0) {
-        const remainingPath =
-            scrollHeight - (scrollFrom + targetContainerHeight);
-        path = Math.min(path, remainingPath);
-    }
-
     const absPath = Math.abs(path);
 
     return () => {
-        if (absPath < 1) {
-            if (currentScrollTop !== scrollFrom) {
-                container.scrollTop = scrollFrom;
+        if (absPath === 0) {
+            if (currentScrollTop !== scrollTo) {
+                container.scrollTop = scrollTo;
             }
-
             return;
         }
 
-        const target = scrollFrom + path;
         isAnimating = true;
 
+        const target = scrollTo;
         const transition =
             absPath <= FAST_SMOOTH_SHORT_TRANSITION_MAX_DISTANCE
                 ? shortTransition
                 : longTransition;
-        const duration =
-            FAST_SMOOTH_MIN_DURATION +
-            (absPath / FAST_SMOOTH_MAX_DISTANCE) *
-                (FAST_SMOOTH_MAX_DURATION - FAST_SMOOTH_MIN_DURATION);
+
+        // const duration =
+        //     FAST_SMOOTH_MIN_DURATION +
+        //     (absPath / FAST_SMOOTH_MAX_DISTANCE) *
+        //         (FAST_SMOOTH_MAX_DURATION - FAST_SMOOTH_MIN_DURATION);
+        const duration = 300;
+
         const startAt = Date.now();
         // const onHeavyAnimationStop = dispatchHeavyAnimationEvent();
 
@@ -104,7 +87,6 @@ function createMutateFunction(
             isAnimating = t < 1 && newScrollTop !== target;
 
             if (!isAnimating) {
-                // currentArgs = undefined;
             }
 
             return isAnimating;
@@ -139,7 +121,7 @@ let currentInstance: AnimationInstance | undefined;
 export function animateSingle(
     tick: Function,
     schedulerFn: any,
-    instance?: any
+    instance?: AnimationInstance
 ) {
     if (!instance) {
         if (currentInstance && !currentInstance.isCancelled) {
@@ -150,7 +132,7 @@ export function animateSingle(
         currentInstance = instance;
     }
 
-    if (!instance!.isCancelled && tick()) {
+    if (!(instance.isCancelled) && tick()) {
         schedulerFn(() => {
             animateSingle(tick, schedulerFn, instance);
         });

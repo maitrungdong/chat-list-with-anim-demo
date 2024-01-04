@@ -205,9 +205,9 @@ export class MessageRepository {
                         currentLastStickerMessage.msgType === messageJ.msgType
                     ) {
                         currentLastStickerMessage = messageJ;
-                        stickerGroupMessage.msgId =
-                            currentLastStickerMessage.msgId;
-                        stickerGroupMessage.senDttm = currentLastStickerMessage.senDttm;
+                        // stickerGroupMessage.msgId =
+                        //     currentLastStickerMessage.msgId;
+                        // stickerGroupMessage.senDttm = currentLastStickerMessage.senDttm;
                         stickerGroupMessage.content.push(messageJ);
                         groupedCount++;
                     } else {

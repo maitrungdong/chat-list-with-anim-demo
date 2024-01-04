@@ -1,7 +1,18 @@
-import React from "react";
+import React from 'react';
 
-function StickerGroupMessageRowItem(props: any) {
-  return <div className="sticker-group-message-row-item">{props.children}</div>;
-}
+type StickerGroupMessageRowItemProps = {
+    className?: string;
+    children: React.ReactNode;
+};
+type StickerGroupMessageRowItemRef = HTMLDivElement;
 
-export default StickerGroupMessageRowItem;
+export default React.forwardRef<
+    StickerGroupMessageRowItemRef,
+    StickerGroupMessageRowItemProps
+>((props, ref) => {
+    return (
+        <div ref={ref} className="sticker-group-message-row-item">
+            {props.children}
+        </div>
+    );
+});

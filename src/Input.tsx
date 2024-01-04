@@ -13,9 +13,9 @@ function Input(props: InputProps) {
     return (
         <div className="input">
             <button onClick={onClickSendStickerMessage}>
-                Send sticker message
+                Send sticker
             </button>
-            <button onClick={onClickSendTextMessage}>Send text message</button>
+            <button onClick={onClickSendTextMessage}>Send text</button>
         </div>
     );
 }

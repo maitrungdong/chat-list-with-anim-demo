@@ -1,7 +1,12 @@
-import React from "react";
+import React from 'react';
+import FlipMove from 'react-flip-move';
 
 function StickerGroupMessageRow(props: any) {
-  return <div className="sticker-group-message-row">{props.children}</div>;
+    return (
+        <FlipMove className="sticker-group-message-row">
+            {props.children}
+        </FlipMove>
+    );
 }
 
 export default StickerGroupMessageRow;

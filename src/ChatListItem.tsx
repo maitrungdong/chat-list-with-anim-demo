@@ -22,7 +22,6 @@ function ChatListItem(props: ChatListItemProps) {
     useFocusMessage({
         messageDOMElementRef: chatListItemHolder,
         isJustAdded,
-        isFocused: true,
     });
 
     return (

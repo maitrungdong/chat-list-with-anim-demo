@@ -6,6 +6,8 @@
 
   box-sizing: border-box;
   width: 100%;
-  height: calc(100% - 80px);
+  height: calc(100% - 56px);
   overflow: auto;
+
+  scrollbar-width: thin;
 }
