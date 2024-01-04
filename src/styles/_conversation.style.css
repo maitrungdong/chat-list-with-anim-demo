@@ -1,0 +1,24 @@
+body {
+  background-color: rgb(249, 243, 235);
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+}
+
+.conversation {
+  background-color: gray;
+  width: 100%;
+  height: calc(100% - 80px);
+}

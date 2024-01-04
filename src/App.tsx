@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { MessageRepository } from './MessageRepository';
+
+import Conversation from './Conversation';
+import Input from './Input';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [messageList, setMessageList] = React.useState(() =>
+        MessageRepository.getInitialMessageList()
+    );
+
+    const createNewStickerMessage = () => {
+        setMessageList((messageList: any[]) => {
+            return [...messageList, MessageRepository.createStickerMessage()];
+        });
+    };
+
+    const createNewTextMessage = () => {
+        setMessageList((messageList: any[]) => {
+            return [...messageList, MessageRepository.createTextMessage()];
+        });
+    };
+
+    const groupedMessageList = MessageRepository.groupMessageList(messageList);
+
+    return (
+        <div className="app">
+            <Conversation messageList={groupedMessageList} />
+            <Input
+                sendNewStickerMessage={createNewStickerMessage}
+                sendNewTextMessage={createNewTextMessage}
+            />
+        </div>
+    );
 }
 
 export default App;

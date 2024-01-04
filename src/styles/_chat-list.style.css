@@ -1,0 +1,11 @@
+.chat-list {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}

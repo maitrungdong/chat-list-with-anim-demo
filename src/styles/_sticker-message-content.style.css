@@ -1,0 +1,26 @@
+.sticker-group-message-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sticker-group-message-row {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.sticker-message-content {
+  width: 130px;
+  height: 130px;
+}
+
+.sticker {
+  width: 100%;
+  height: 100%;
+}
+
+.sticker > .sticker__thumb {
+  width: 100%;
+  height: 100%;
+}

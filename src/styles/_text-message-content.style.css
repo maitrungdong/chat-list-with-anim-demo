@@ -1,0 +1,7 @@
+.text-message-content {
+  border-radius: 6px;
+  padding: 6px;
+  height: fit-content;
+
+  background-color: aliceblue;
+}
