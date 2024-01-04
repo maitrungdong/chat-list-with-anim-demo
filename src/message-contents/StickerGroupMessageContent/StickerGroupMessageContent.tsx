@@ -32,6 +32,11 @@ function StickerGroupMessageContent(props: StickerGroupMessageContentProps) {
                         {stickerMessages.map((stickerMessage) => {
                             return (
                                 <StickerGroupMessageRowItem
+                                    className={`${
+                                        stickerMessages.length >= 3
+                                            ? '--small'
+                                            : ''
+                                    }`}
                                     key={`sgm-row-item:${stickerMessage.msgId}`}
                                 >
                                     <StickerMessageContent

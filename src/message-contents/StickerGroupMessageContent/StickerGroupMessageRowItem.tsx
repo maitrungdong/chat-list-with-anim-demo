@@ -11,7 +11,12 @@ export default React.forwardRef<
     StickerGroupMessageRowItemProps
 >((props, ref) => {
     return (
-        <div ref={ref} className="sticker-group-message-row-item">
+        <div
+            ref={ref}
+            className={`sticker-group-message-row-item ${
+                props.className || ''
+            }`}
+        >
             {props.children}
         </div>
     );
