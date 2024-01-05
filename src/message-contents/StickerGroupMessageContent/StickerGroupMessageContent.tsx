@@ -1,54 +1,66 @@
 import React from 'react';
+import { Flipper } from 'react-flip-toolkit';
 
 import { separateItemPerRow } from '../../utils/seperate-item-per-row';
 
 import StickerGroupMessageRow from './StickerGroupMessageRow';
 import StickerGroupMessageRowItem from './StickerGroupMessageRowItem';
 import StickerMessageContent from './StickerMessageContent';
+
 import type {
     StickerGroupMessageType,
-    StickerMessageType,
 } from '../../MessageRepository';
 
 type StickerGroupMessageContentProps = {
     message: StickerGroupMessageType;
 };
 
+const buildSGMFlipKey = (sgm: StickerGroupMessageType) => {
+    return sgm?.content?.map((sm) => sm.msgId).join('#') ?? '';
+};
+
 function StickerGroupMessageContent(props: StickerGroupMessageContentProps) {
     const { message: stickerGroupMessage } = props;
-    const stickerMessageList = stickerGroupMessage.content;
-    const stickerMessagesPerRow = separateItemPerRow(stickerMessageList);
+    const stickerMessagesPerRow = separateItemPerRow(
+        stickerGroupMessage.content
+    );
+    console.log('[mtd] StickerGroupMessageContent: ', stickerGroupMessage);
 
     return (
-        <div className="sticker-group-message-content">
-            {stickerMessagesPerRow.map((stickerMessages_) => {
-                const fromMe = stickerGroupMessage.fromMe;
-                const rowKey = stickerMessages_[0].msgId;
-                const stickerMessages: StickerMessageType[] = fromMe
-                    ? stickerMessages_
-                    : stickerMessages_.slice().reverse();
-                return (
-                    <StickerGroupMessageRow key={`sgm-row:${rowKey}`}>
-                        {stickerMessages.map((stickerMessage) => {
-                            return (
-                                <StickerGroupMessageRowItem
-                                    className={`${
-                                        stickerMessages.length >= 3
-                                            ? '--small'
-                                            : ''
-                                    }`}
-                                    key={`sgm-row-item:${stickerMessage.msgId}`}
-                                >
-                                    <StickerMessageContent
+        <Flipper flipKey={buildSGMFlipKey(stickerGroupMessage)}>
+            <div className="sticker-group-message-content">
+                {stickerMessagesPerRow.map((stickerMessages_) => {
+                    const fromMe = stickerGroupMessage.fromMe;
+                    const rowKey = `sgm-row:${stickerMessages_[0].msgId}`;
+                    const stickerMessages = fromMe
+                        ? stickerMessages_
+                        : stickerMessages_.slice().reverse();
+
+                    return (
+                        <StickerGroupMessageRow key={rowKey}>
+                            {stickerMessages.map((stickerMessage) => {
+                                const colKey = `sgm-row-item:${stickerMessage.msgId}`;
+                                return (
+                                    <StickerGroupMessageRowItem
+                                        key={colKey}
+                                        // className={`${
+                                        //     stickerMessages.length >= 3
+                                        //         ? '--small'
+                                        //         : ''
+                                        // }`}
                                         message={stickerMessage}
-                                    />
-                                </StickerGroupMessageRowItem>
-                            );
-                        })}
-                    </StickerGroupMessageRow>
-                );
-            })}
-        </div>
+                                    >
+                                        <StickerMessageContent
+                                            message={stickerMessage}
+                                        />
+                                    </StickerGroupMessageRowItem>
+                                );
+                            })}
+                        </StickerGroupMessageRow>
+                    );
+                })}
+            </div>
+        </Flipper>
     );
 }
 
