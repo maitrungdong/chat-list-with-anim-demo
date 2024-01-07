@@ -1,4 +1,6 @@
 .chat-list {
+  position: relative;
+
   padding: 10px;
   display: flex;
   flex-direction: column;

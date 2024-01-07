@@ -1,3 +1,6 @@
+import { AnimationExecutor } from './lib/animation-executor';
+import { VerticalScrollAnimation } from './vertical-scroll-animation/'
+
 export const FAST_SMOOTH_MAX_DISTANCE = 750;
 export const FAST_SMOOTH_SHORT_TRANSITION_MAX_DISTANCE = 300; // px
 export const FAST_SMOOTH_MIN_DURATION = 300;
@@ -14,6 +17,10 @@ function longTransition(t: number) {
 }
 
 let isAnimating: boolean = false;
+const animationExecutor = new AnimationExecutor();
+const verticalScrollAnimation = new VerticalScrollAnimation();
+
+(window as any)._verticalScrollAnimation = verticalScrollAnimation;
 
 export function animateScroll(...args: Params): void {
     const mutate = createMutateFunction(...args);
@@ -77,7 +84,22 @@ function createMutateFunction(
         const startAt = Date.now();
         // const onHeavyAnimationStop = dispatchHeavyAnimationEvent();
 
-        animateSingle(() => {
+        // animateSingle(() => {
+        //     const t = Math.min((Date.now() - startAt) / duration, 1);
+        //     const currentPath = path * (1 - transition(t));
+        //     const newScrollTop = Math.round(target - currentPath);
+
+        //     container.scrollTop = newScrollTop;
+
+        //     isAnimating = t < 1 && newScrollTop !== target;
+
+        //     if (!isAnimating) {
+        //     }
+
+        //     return isAnimating;
+        // }, window.requestAnimationFrame);
+
+        animationExecutor.start(() => {
             const t = Math.min((Date.now() - startAt) / duration, 1);
             const currentPath = path * (1 - transition(t));
             const newScrollTop = Math.round(target - currentPath);
@@ -90,7 +112,7 @@ function createMutateFunction(
             }
 
             return isAnimating;
-        }, window.requestAnimationFrame);
+        });
     };
 }
 
@@ -118,23 +140,23 @@ interface AnimationInstance {
 }
 
 let currentInstance: AnimationInstance | undefined;
-export function animateSingle(
-    tick: Function,
-    schedulerFn: any,
-    instance?: AnimationInstance
-) {
-    if (!instance) {
-        if (currentInstance && !currentInstance.isCancelled) {
-            currentInstance.isCancelled = true;
-        }
+// export function animateSingle(
+//     tick: Function,
+//     schedulerFn: any,
+//     instance?: AnimationInstance
+// ) {
+//     if (!instance) {
+//         if (currentInstance && !currentInstance.isCancelled) {
+//             currentInstance.isCancelled = true;
+//         }
 
-        instance = { isCancelled: false };
-        currentInstance = instance;
-    }
+//         instance = { isCancelled: false };
+//         currentInstance = instance;
+//     }
 
-    if (!(instance.isCancelled) && tick()) {
-        schedulerFn(() => {
-            animateSingle(tick, schedulerFn, instance);
-        });
-    }
-}
+//     if (!(instance.isCancelled) && tick()) {
+//         schedulerFn(() => {
+//             animateSingle(tick, schedulerFn, instance);
+//         });
+//     }
+// }
