@@ -29,8 +29,8 @@ export interface IVerticalScrollAnimation {
         element: HTMLElement,
         position: ScrollLogicalPosition,
         extraSpace: number,
-        maxDistance: number,
         direction?: FocusDirection,
+        maxDistance?: number,
         forceDuration?: number
     ) => void;
     calcToData: (
@@ -52,8 +52,8 @@ export class VerticalScrollAnimation implements IVerticalScrollAnimation {
         element: HTMLElement,
         position: ScrollLogicalPosition,
         extraSpace: number = 20,
-        maxDistance: number = FAST_SMOOTH_MAX_DISTANCE,
         direction?: FocusDirection,
+        maxDistance: number = FAST_SMOOTH_MAX_DISTANCE,
         forceDuration?: number
     ): void {
         const data = this.calcToData(

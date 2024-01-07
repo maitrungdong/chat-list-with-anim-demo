@@ -4,6 +4,7 @@ import { MessageTypes } from './MessageRepository';
 import { StickerGroupMessageContent } from './message-contents/StickerGroupMessageContent';
 import { TextMessageContent } from './message-contents/TextMessageContent';
 import { MessageContentWrapper } from './MessageContentWrapper';
+import { FocusDirection } from './animation/vertical-scroll-animation/constants';
 
 import { useFocusMessage } from './hooks/use-focus-message';
 
@@ -13,6 +14,7 @@ type ChatListItemProps = {
     message: MessageType;
     isJustAdded?: boolean;
     isFocused?: boolean;
+    direction?: FocusDirection;
 };
 
 function ChatListItem(props: ChatListItemProps) {
@@ -22,6 +24,7 @@ function ChatListItem(props: ChatListItemProps) {
     useFocusMessage({
         messageDOMElementRef: chatListItemHolder,
         isJustAdded,
+        direction: props.direction,
     });
 
     return (
