@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { animateScroll } from '../animation/animate-scroll';
+// import { animateScroll } from '../animation/animate-scroll';
+import verticalScrollAnimation from '../animation/vertical-scroll-animation';
 
 type Props = {
     messageDOMElementRef: React.RefObject<HTMLElement>;
@@ -19,15 +20,12 @@ export const useFocusMessage = (props: Props) => {
                 );
             if (!messageListContainer) return;
 
-            const cancelAnimationScroll = animateScroll(
+            const cancelAnimationScroll = verticalScrollAnimation.animateScroll(
                 messageListContainer,
                 messageDOMElement,
                 'end',
-                12
+                20
             );
-            // return () => {
-            //     cancelAnimationScroll();
-            // };
         }
     }, [messageDOMElementRef, isJustAdded]);
 };

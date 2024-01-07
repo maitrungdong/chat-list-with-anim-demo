@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./styles";
 import App from './App';
+import './animation/lib/animation-executor';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
