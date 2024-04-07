@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { MessageTypes } from './MessageRepository';
-import { StickerGroupMessageContent } from './message-contents/StickerGroupMessageContent';
+import { StickerGroupMessageContent } from './message-contents/StaticStickerGroupMessageContent';
 import { TextMessageContent } from './message-contents/TextMessageContent';
 import { MessageContentWrapper } from './MessageContentWrapper';
 import { FocusDirection } from './animation/vertical-scroll-animation/constants';
@@ -40,7 +40,7 @@ function ChatListItem(props: ChatListItemProps) {
                     <TextMessageContent message={message} />
                 )}
                 {message.msgType === MessageTypes.StickerGroup && (
-                    <StickerGroupMessageContent message={message} />
+                    <StickerGroupMessageContent message={message} isJustAdded={isJustAdded} />
                 )}
             </MessageContentWrapper>
         </div>

@@ -21,7 +21,7 @@ export const useFocusMessage = (props: Props) => {
                     '.chat-list'
                 );
             if (!messageListContainer) return;
-            if (direction === FocusDirection.Static) debugger;
+            if (direction === FocusDirection.Static) return;
             const cancelAnimationScroll = verticalScrollAnimation.animateScroll(
                 messageListContainer,
                 messageDOMElement,
