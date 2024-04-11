@@ -10,11 +10,16 @@ function Input(props: InputProps) {
         typeof props.sendNewTextMessage === 'function' &&
             props.sendNewTextMessage();
     };
+
+    const onClickSimulate = () => {
+        onClickSendStickerMessage();
+    };
     return (
         <div className="input">
-            <button onClick={onClickSendStickerMessage}>
-                Send sticker
+            <button onClick={onClickSimulate}>
+                Simulate Animate Send Sticker
             </button>
+            <button onClick={onClickSendStickerMessage}>Send sticker</button>
             <button onClick={onClickSendTextMessage}>Send text</button>
         </div>
     );

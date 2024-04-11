@@ -1,0 +1,48 @@
+.sticker-group-message-content {
+  border: 2px solid red;
+
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 6px;
+
+  &.--me {
+    flex-direction: row;
+  }
+}
+
+.normal-sticker-message-content {
+  width: 100px;
+  height: 100px;
+
+  border: 2px solid green;
+}
+
+.sticker {
+  width: 100%;
+  height: 100%;
+}
+
+.sticker>.sticker__thumb {
+  width: 100%;
+  height: 100%;
+}
+
+.sticker-message-item-appear,
+.sticker-message-item-enter {
+  opacity: 0;
+  transform: translateY(50%);
+}
+
+.sticker-message-item-appear-active,
+.sticker-message-item-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 200ms ease;
+}
+
+.sticker-message-item-appear-done,
+.sticker-message-item-enter-done {
+  opacity: 1;
+  transform: none;
+}

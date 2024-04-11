@@ -1,10 +1,13 @@
 import React from 'react';
+import { StickerMessageType } from '@src/MessageRepository';
 
-function StickerMessageContent(props: any) {
-    const { message } = props;
-
+export function NormalStickerMessageContent({
+    message,
+}: {
+    message: StickerMessageType;
+}) {
     return (
-        <div className="sticker-message-content">
+        <div className="normal-sticker-message-content">
             <div className="sticker">
                 <img
                     className="sticker__thumb"
@@ -15,5 +18,3 @@ function StickerMessageContent(props: any) {
         </div>
     );
 }
-
-export default StickerMessageContent;

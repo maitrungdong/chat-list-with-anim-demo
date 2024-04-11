@@ -1,7 +1,11 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { MessageTypes } from './MessageRepository';
-import { StickerGroupMessageContent } from './message-contents/StaticStickerGroupMessageContent';
+import {
+    AnimatedStickerGroupMessageContent,
+    StaticStickerGroupMessageContent,
+} from './message-contents/StickerGroupMessageContent';
 import { TextMessageContent } from './message-contents/TextMessageContent';
 import { MessageContentWrapper } from './MessageContentWrapper';
 import { FocusDirection } from './animation/vertical-scroll-animation/constants';
@@ -30,7 +34,7 @@ function ChatListItem(props: ChatListItemProps) {
     return (
         <div
             ref={chatListItemHolder}
-            className={`chat-list-item ${message.fromMe ? '--me' : ''}`}
+            className={classNames(`chat-list-item`, message.fromMe && '--me')}
         >
             <MessageContentWrapper
                 message={message}
@@ -39,9 +43,15 @@ function ChatListItem(props: ChatListItemProps) {
                 {message.msgType === MessageTypes.Text && (
                     <TextMessageContent message={message} />
                 )}
-                {message.msgType === MessageTypes.StickerGroup && (
-                    <StickerGroupMessageContent message={message} isJustAdded={isJustAdded} />
-                )}
+                {message.msgType === MessageTypes.StickerGroup &&
+                    (isJustAdded ? (
+                        <AnimatedStickerGroupMessageContent
+                            isJustAdded={isJustAdded}
+                            message={message}
+                        />
+                    ) : (
+                        <StaticStickerGroupMessageContent message={message} />
+                    ))}
             </MessageContentWrapper>
         </div>
     );

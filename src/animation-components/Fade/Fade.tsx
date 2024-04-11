@@ -1,6 +1,6 @@
 import React from 'react';
 import './_fade-anim.scss';
-import { CSSTransition } from 'react-transition-group';
+import CSSTransition from '../../../src/react-transition-group-next-ver/CSSTransition';
 
 export const FADE_TIMEOUT = 1000;
 

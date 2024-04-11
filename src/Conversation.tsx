@@ -24,6 +24,7 @@ function Conversation(props: ConversationProps) {
     };
 
     const groupedMessageList = MessageRepository.groupMessageList(messageList);
+    console.log('@dongmt groupedMessageList: ', groupedMessageList);
 
     return (
         <div className="conversation">

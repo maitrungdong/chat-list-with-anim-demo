@@ -1,1 +1,1 @@
-export { default as TextMessageContent } from "./TextMessageContent";
+export { TextMessageContent } from './TextMessageContent';

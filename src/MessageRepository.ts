@@ -1,5 +1,6 @@
 import { LoremIpsum } from 'lorem-ipsum';
-import { v1 as uuidv1 } from 'uuid';
+let id = 0;
+const uuidv1 = () => ++id + '';
 
 const textGenerator = new LoremIpsum({
     sentencesPerParagraph: {
@@ -161,7 +162,8 @@ export class MessageRepository {
         return {
             msgId: uuidv1(),
             msgType: MessageTypes.Sticker,
-            fromMe: fromMeGenerator(),
+            // fromMe: fromMeGenerator(),
+            fromMe: 1,
             content: stickerGenerator(),
             senDttm: Date.now(),
         };
@@ -171,7 +173,8 @@ export class MessageRepository {
         return {
             msgId: uuidv1(),
             msgType: MessageTypes.Text,
-            fromMe: fromMeGenerator(),
+            // fromMe: fromMeGenerator(),
+            fromMe: 1,
             content: textGenerator.generateSentences(
                 Math.floor(Math.random() * 10 + 1)
             ),
@@ -185,11 +188,13 @@ export class MessageRepository {
         for (let i = 0; i < messageList.length; i += groupedCount + 1) {
             const messageI = messageList[i];
             groupedCount = 0;
+            let groupMsgId = '';
             if (messageI.msgType === MessageTypes.Sticker) {
                 let currentLastStickerMessage = messageI as StickerMessageType;
+                groupMsgId += currentLastStickerMessage.msgId;
 
                 const stickerGroupMessage: StickerGroupMessageType = {
-                    msgId: currentLastStickerMessage.msgId,
+                    msgId: groupMsgId,
                     msgType: MessageTypes.StickerGroup,
                     fromMe: currentLastStickerMessage.fromMe,
                     content: [currentLastStickerMessage],
@@ -205,9 +210,8 @@ export class MessageRepository {
                         currentLastStickerMessage.msgType === messageJ.msgType
                     ) {
                         currentLastStickerMessage = messageJ;
-                        // stickerGroupMessage.msgId =
-                        //     currentLastStickerMessage.msgId;
-                        // stickerGroupMessage.senDttm = currentLastStickerMessage.senDttm;
+                        groupMsgId += `#${messageJ.msgId}`;
+                        stickerGroupMessage.msgId = groupMsgId;
                         stickerGroupMessage.content.push(messageJ);
                         groupedCount++;
                     } else {

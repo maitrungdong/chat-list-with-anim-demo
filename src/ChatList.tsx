@@ -2,7 +2,7 @@ import React from 'react';
 
 import ChatListItem from './ChatListItem';
 import { usePreviousValue } from './hooks/use-previous-value';
-import { MessageType } from './MessageRepository';
+import { MessageType, MessageTypes } from './MessageRepository';
 import { FocusDirection } from './animation/vertical-scroll-animation/constants';
 
 type ChatListProps = {
@@ -20,9 +20,12 @@ function ChatList(props: ChatListProps) {
                 const isNewMessage = Boolean(
                     messageList &&
                         (!prevMessageList ||
-                            messageList[messageList.length - 2].msgId ===
+                            (prevMessageList.length === messageList.length &&
                                 prevMessageList[prevMessageList.length - 1]
-                                    .msgId)
+                                    .msgId !== message.msgId) ||
+                            prevMessageList[prevMessageList.length - 1]
+                                .msgId ===
+                                messageList[messageList.length - 2].msgId)
                 );
                 const isJustAdded = isLastInList && isNewMessage;
                 const direction_ =
@@ -31,7 +34,12 @@ function ChatList(props: ChatListProps) {
                         : undefined;
                 return (
                     <ChatListItem
-                        key={message.msgId}
+                        key={
+                            message.msgType === MessageTypes.Text ||
+                            message.msgType === MessageTypes.Sticker
+                                ? message.msgId
+                                : message.content[0].msgId
+                        }
                         message={message}
                         isJustAdded={isJustAdded}
                         direction={direction_}

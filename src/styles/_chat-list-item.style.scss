@@ -1,7 +1,9 @@
 .chat-list-item {
   max-width: 70%;
+  margin-right: auto;
 }
 
 .chat-list-item.--me {
   margin-left: auto;
+  margin-right: 0;
 }
