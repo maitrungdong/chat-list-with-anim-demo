@@ -86,6 +86,7 @@ function getProp(child, prop, props) {
 }
 
 export function getInitialChildMapping(props, onExited) {
+  console.log('@dongmt getInitialChildMapping props...', arguments);
   return getChildMapping(props.children, (child) => {
     /** @note Đây là lúc ban đầu, vậy có thể mình sẽ trả về getPrevSnapShotPositions: null */
     return cloneElement(child, {
@@ -99,6 +100,7 @@ export function getInitialChildMapping(props, onExited) {
 }
 
 export function getNextChildMapping(nextProps, prevChildMapping, onExited) {
+  console.log('@dongmt getNextChildMapping...', arguments);
   let nextChildMapping = getChildMapping(nextProps.children);
   let children = mergeChildMappings(prevChildMapping, nextChildMapping);
 
@@ -115,7 +117,7 @@ export function getNextChildMapping(nextProps, prevChildMapping, onExited) {
 
     // item is new (entering)
     if (hasNext && (!hasPrev || isLeaving)) {
-      // console.log('entering', key)
+      console.log('@dongmt entering: ', key);
       children[key] = cloneElement(child, {
         onExited: onExited.bind(null, child),
         in: true,
@@ -124,12 +126,12 @@ export function getNextChildMapping(nextProps, prevChildMapping, onExited) {
       });
     } else if (!hasNext && hasPrev && !isLeaving) {
       // item is old (exiting)
-      // console.log('leaving', key)
+      console.log('@dongmt leaving: ', key);
       children[key] = cloneElement(child, { in: false });
     } else if (hasNext && hasPrev && isValidElement(prevChild)) {
       // item hasn't changed transition states
       // copy over the last transition props;
-      // console.log('unchanged', key)
+      console.log('@dongmt unchanged: ', key);
       children[key] = cloneElement(child, {
         onExited: onExited.bind(null, child),
         in: prevChild.props.in,

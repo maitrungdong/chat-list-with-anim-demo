@@ -7,7 +7,7 @@ export function NormalStickerMessageContent({
     message: StickerMessageType;
 }) {
     return (
-        <div className="normal-sticker-message-content">
+        <div id={message.msgId} className="normal-sticker-message-content">
             <div className="sticker">
                 <img
                     className="sticker__thumb"

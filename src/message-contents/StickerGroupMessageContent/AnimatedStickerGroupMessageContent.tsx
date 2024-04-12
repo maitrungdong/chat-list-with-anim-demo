@@ -14,6 +14,7 @@ export type AnimatedStickerGroupMessageContentProps = {
 export function AnimatedStickerGroupMessageContent(
     props: AnimatedStickerGroupMessageContentProps
 ) {
+    const messageContentRef = React.useRef<HTMLDivElement>(null);
     const { message: stickerGroupMessage } = props;
     const stickerMessageList = stickerGroupMessage.content;
     const fromMe = stickerGroupMessage.fromMe;
@@ -22,6 +23,7 @@ export function AnimatedStickerGroupMessageContent(
 
     return (
         <div
+            ref={messageContentRef}
             className={classNames(
                 'sticker-group-message-content',
                 '--animated',
@@ -29,6 +31,7 @@ export function AnimatedStickerGroupMessageContent(
             )}
         >
             <TransitionGroup
+                containerRef={messageContentRef}
                 appear={props.isJustAdded}
                 enter={true}
                 exit={false}
@@ -39,7 +42,6 @@ export function AnimatedStickerGroupMessageContent(
                         <CSSTransition
                             key={stickerMessage.msgId}
                             classNames="sticker-message-item"
-                            // timeout={200}
                             addEndListener={(node: any, done: any) => {
                                 node.addEventListener(
                                     'transitionend',
