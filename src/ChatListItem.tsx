@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { MessageTypes } from './MessageRepository';
 import {
-    AnimatedStickerGroupMessageContent,
+    WAAPIStickerGroupMessageContent,
     StaticStickerGroupMessageContent,
 } from './message-contents/StickerGroupMessageContent';
 import { TextMessageContent } from './message-contents/TextMessageContent';
@@ -45,7 +45,7 @@ function ChatListItem(props: ChatListItemProps) {
                 )}
                 {message.msgType === MessageTypes.StickerGroup &&
                     (isJustAdded ? (
-                        <AnimatedStickerGroupMessageContent
+                        <WAAPIStickerGroupMessageContent
                             isJustAdded={isJustAdded}
                             message={message}
                         />

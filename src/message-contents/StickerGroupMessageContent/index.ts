@@ -2,3 +2,5 @@ export { AnimatedStickerGroupMessageContent } from './AnimatedStickerGroupMessag
 export type { AnimatedStickerGroupMessageContentProps } from './AnimatedStickerGroupMessageContent';
 export { StaticStickerGroupMessageContent } from './StaticStickerGroupMessageContent';
 export type { StaticStickerGroupMessageContentProps } from './StaticStickerGroupMessageContent';
+export { WAAPIStickerGroupMessageContent } from './WAAPIStickerGroupMessageContent';
+export type { WAAPIStickerGroupMessageContentProps } from './WAAPIStickerGroupMessageContent';

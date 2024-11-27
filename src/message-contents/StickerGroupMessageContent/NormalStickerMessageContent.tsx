@@ -1,13 +1,19 @@
 import React from 'react';
 import { StickerMessageType } from '@src/MessageRepository';
 
-export function NormalStickerMessageContent({
-    message,
-}: {
-    message: StickerMessageType;
-}) {
+type Ref = HTMLDivElement;
+export const NormalStickerMessageContent = React.forwardRef<
+    Ref,
+    {
+        message: StickerMessageType;
+    }
+>(function NormalStickerMessageContent({ message }, ref) {
     return (
-        <div id={message.msgId} className="normal-sticker-message-content">
+        <div
+            ref={ref}
+            id={message.msgId}
+            className="normal-sticker-message-content"
+        >
             <div className="sticker">
                 <img
                     className="sticker__thumb"
@@ -17,4 +23,4 @@ export function NormalStickerMessageContent({
             </div>
         </div>
     );
-}
+});
